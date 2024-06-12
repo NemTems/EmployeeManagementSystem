@@ -18,6 +18,8 @@ public class IDCardDTOMapper {
     }
 
     public static IDCard toEntity(IDCardDTO dto) {
+        if(dto == null) return null;
+
         IDCard idCard = new IDCard();
         idCard.setIssue_date(dto.getIssueDate());
         idCard.setExpiry_date(dto.getExpiryDate());
@@ -26,26 +28,33 @@ public class IDCardDTOMapper {
     }
 
     public static EmployeeDTO EmployeeToDTO(Employee employee) {
+        if(employee == null) return null;
+
         EmployeeDTO dto = new EmployeeDTO();
         dto.setName(employee.getName());
         dto.setEmail(employee.getEmail());
         dto.setPhone(employee.getPhone());
         dto.setDepartment(EmployeeDTOMapper.DepartmentToDTO(employee.getDepartment()));
-        dto.setProjects(employee.getProjects().stream()
-                .map(EmployeeDTOMapper::ProjectToDTO)
-                .collect(Collectors.toSet()));
+        if(employee.getProjects() != null) {
+            dto.setProjects(employee.getProjects().stream()
+                    .map(EmployeeDTOMapper::ProjectToDTO)
+                    .collect(Collectors.toSet()));
+        }
         return dto;
     }
 
     public static Employee EmployeeToEntity(EmployeeDTO dto) {
+        if(dto == null) return null;
         Employee employee = new Employee();
         employee.setName(dto.getName());
         employee.setEmail(dto.getEmail());
         employee.setPhone(dto.getPhone());
         employee.setDepartment(EmployeeDTOMapper.DepartmentToEntity(dto.getDepartment()));
-        employee.setProjects(dto.getProjects().stream()
-                .map(EmployeeDTOMapper::ProjectToEntity)
-                .collect(Collectors.toSet()));
+        if(employee.getProjects() != null) {
+            employee.setProjects(dto.getProjects().stream()
+                    .map(EmployeeDTOMapper::ProjectToEntity)
+                    .collect(Collectors.toSet()));
+        }
         return employee;
     }
 }
