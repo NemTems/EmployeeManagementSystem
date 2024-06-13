@@ -2,7 +2,6 @@ package com.system.EmployeeManagementSystem.controllers;
 
 
 import com.system.EmployeeManagementSystem.DTOs.TaskDTO;
-import com.system.EmployeeManagementSystem.models.Task;
 import com.system.EmployeeManagementSystem.services.TaskService;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,13 +27,13 @@ public class TaskController {
     }
 
     @PostMapping("/add")
-    public void addTask(@RequestBody Task department) {
-        taskService.save(department);
+    public String addTask(@RequestBody TaskDTO taskDTO) {
+        return taskService.save(taskDTO);
     }
 
-    @PutMapping("/update")
-    public void updateTask(@RequestBody Task department) {
-        taskService.update(department);
+    @PutMapping("/{id}/update")
+    public String updateTask(@PathVariable int id, @RequestBody TaskDTO taskDTO) {
+        return taskService.update(taskDTO, id);
     }
 
     @DeleteMapping("/{id}/delete")

@@ -1,8 +1,6 @@
 package com.system.EmployeeManagementSystem.controllers;
 
 import com.system.EmployeeManagementSystem.DTOs.EmployeeDTO;
-import com.system.EmployeeManagementSystem.models.Employee;
-import com.system.EmployeeManagementSystem.services.EmployeeService;
 import com.system.EmployeeManagementSystem.services.EmployeeService;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,13 +26,13 @@ public class EmployeeController {
     }
 
     @PostMapping("/add")
-    public EmployeeDTO addEmployee(@RequestBody EmployeeDTO department) {
-        return employeeService.save(department);
+    public String addEmployee(@RequestBody EmployeeDTO employeeDTO) {
+        return employeeService.save(employeeDTO);
     }
 
-    @PutMapping("/update")
-    public EmployeeDTO updateEmployee(@RequestBody EmployeeDTO department) {
-        return employeeService.update(department);
+    @PutMapping("/{id}/update")
+    public String updateEmployee(@PathVariable int id,@RequestBody EmployeeDTO employeeDTO) {
+        return employeeService.update(employeeDTO, id);
     }
 
     @DeleteMapping("/{id}/delete")

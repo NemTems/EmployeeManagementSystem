@@ -2,7 +2,6 @@ package com.system.EmployeeManagementSystem.controllers;
 
 
 import com.system.EmployeeManagementSystem.DTOs.IDCardDTO;
-import com.system.EmployeeManagementSystem.models.IDCard;
 import com.system.EmployeeManagementSystem.services.IDCardService;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,13 +27,13 @@ public class IDCardController {
     }
 
     @PostMapping("/add")
-    public IDCard addIDCard(@RequestBody IDCard department) {
-        return idCardService.save(department);
+    public String addIDCard(@RequestBody IDCardDTO idCardDTO) {
+        return idCardService.save(idCardDTO);
     }
 
-    @PutMapping("/update")
-    public IDCard updateIDCard(@RequestBody IDCard department) {
-        return idCardService.update(department);
+    @PutMapping("/{id}/update")
+    public String updateIDCard(@PathVariable int id, @RequestBody IDCardDTO idCardDTO) {
+        return idCardService.update(idCardDTO, id);
     }
 
     @DeleteMapping("/{id}/delete")

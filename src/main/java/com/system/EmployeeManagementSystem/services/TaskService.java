@@ -28,12 +28,18 @@ public class TaskService {
         return taskRepository.findById(id).map(TaskDTOMapper::toDTO).get();
     }
 
-    public Task save(Task Task) {
-        return taskRepository.save(Task);
+    public String save(TaskDTO taskDTO) {
+        taskRepository.save(TaskDTOMapper.toEntity(taskDTO));
+        return "Saved";
     }
 
-    public Task update(Task Task) {
-        return taskRepository.save(Task);
+    public String update(TaskDTO taskDTO, int id) {
+        Task foundTask = taskRepository.findById(id).get();
+        foundTask.setDescription(taskDTO.getDescription());
+        foundTask.setStatus(taskDTO.getStatus());
+        foundTask.setProject(TaskDTOMapper.ProjectToEntity(taskDTO.getProject()));
+
+        return "Updated";
     }
 
     public void delete(int id) {

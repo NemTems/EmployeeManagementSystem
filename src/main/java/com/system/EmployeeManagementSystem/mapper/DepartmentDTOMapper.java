@@ -14,15 +14,15 @@ public class DepartmentDTOMapper {
             return null;
         }
 
-        DepartmentDTO dto = new DepartmentDTO();
-        dto.setName(department.getName());
-        dto.setLocation(department.getLocation());
-        if (department.getEmployees() != null) {
-            dto.setEmployees(department.getEmployees().stream()
-                    .map(DepartmentDTOMapper::EmployeeToDTO)
-                    .collect(Collectors.toSet()));
-        }
-        return dto;
+        return DepartmentDTO.builder()
+                .name(department.getName())
+                .location(department.getLocation())
+                .employees(department.getEmployees() != null
+                        ? department.getEmployees().stream()
+                        .map(DepartmentDTOMapper::EmployeeToDTO)
+                        .collect(Collectors.toSet())
+                        : null)
+                .build();
     }
 
     public static Department toEntity(DepartmentDTO dto) {
@@ -30,32 +30,33 @@ public class DepartmentDTOMapper {
             return null;
         }
 
-        Department department = new Department();
-        department.setName(dto.getName());
-        department.setLocation(dto.getLocation());
-        if (dto.getEmployees() != null) {
-            department.setEmployees(dto.getEmployees().stream()
-                    .map(DepartmentDTOMapper::EmployeeToEntity)
-                    .collect(Collectors.toSet()));
-        }
-        return department;
+        return Department.builder()
+                .name(dto.getName())
+                .location(dto.getLocation())
+                .employees(dto.getEmployees() != null
+                        ? dto.getEmployees().stream()
+                        .map(DepartmentDTOMapper::EmployeeToEntity)
+                        .collect(Collectors.toSet())
+                        : null)
+                .build();
     }
 
     public static EmployeeDTO EmployeeToDTO(Employee employee) {
         if (employee == null) {
             return null;
         }
-        EmployeeDTO dto = new EmployeeDTO();
-        dto.setName(employee.getName());
-        dto.setEmail(employee.getEmail());
-        dto.setPhone(employee.getPhone());
-        dto.setIdCard(EmployeeDTOMapper.IDCardToDTO(employee.getIdcard()));
-        if (employee.getProjects() != null) {
-            dto.setProjects(employee.getProjects().stream()
-                    .map(EmployeeDTOMapper::ProjectToDTO)
-                    .collect(Collectors.toSet()));
-        }
-        return dto;
+
+        return EmployeeDTO.builder()
+                .name(employee.getName())
+                .email(employee.getEmail())
+                .phone(employee.getPhone())
+                .idCard(EmployeeDTOMapper.IDCardToDTO(employee.getIdcard()))
+                .projects(employee.getProjects() != null
+                        ? employee.getProjects().stream()
+                        .map(EmployeeDTOMapper::ProjectToDTO)
+                        .collect(Collectors.toSet())
+                        : null)
+                .build();
     }
 
     public static Employee EmployeeToEntity(EmployeeDTO dto) {
@@ -63,16 +64,16 @@ public class DepartmentDTOMapper {
             return null;
         }
 
-        Employee employee = new Employee();
-        employee.setName(dto.getName());
-        employee.setEmail(dto.getEmail());
-        employee.setPhone(dto.getPhone());
-        employee.setIdcard(EmployeeDTOMapper.IDCardToEntity(dto.getIdCard()));
-        if (dto.getProjects() != null) {
-            employee.setProjects(dto.getProjects().stream()
-                    .map(EmployeeDTOMapper::ProjectToEntity)
-                    .collect(Collectors.toSet()));
-        }
-        return employee;
+        return Employee.builder()
+                .name(dto.getName())
+                .email(dto.getEmail())
+                .phone(dto.getPhone())
+                .idcard(EmployeeDTOMapper.IDCardToEntity(dto.getIdCard()))
+                .projects(dto.getProjects() != null
+                        ? dto.getProjects().stream()
+                        .map(EmployeeDTOMapper::ProjectToEntity)
+                        .collect(Collectors.toSet())
+                        : null)
+                .build();
     }
 }

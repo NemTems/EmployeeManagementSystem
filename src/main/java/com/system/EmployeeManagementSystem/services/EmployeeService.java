@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Service
 public class EmployeeService {
 
-    private EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
 
     public EmployeeService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
@@ -29,14 +29,26 @@ public class EmployeeService {
         return employeeRepository.findById(id).map(EmployeeDTOMapper::toDTO).get();
     }
 
-    public EmployeeDTO save(EmployeeDTO employee) {
+    public String save(EmployeeDTO employee) {
         employeeRepository.save(EmployeeDTOMapper.toEntity(employee));
-        return employee;
+        return "Saved";
     }
 
-    public EmployeeDTO update(EmployeeDTO employee) {
-        employeeRepository.save(EmployeeDTOMapper.toEntity(employee));
-        return employee;
+    public String update(EmployeeDTO employee, int id) {
+        Employee foundEmployee = employeeRepository.findById(id).get();
+
+        foundEmployee.setName(employee.getName());
+        foundEmployee.setEmail(employee.getEmail());
+        foundEmployee.setPhone(employee.getPhone());
+        foundEmployee.setDepartment(EmployeeDTOMapper.DepartmentToEntity(employee.getDepartment()));
+        foundEmployee.setIdcard(EmployeeDTOMapper.IDCardToEntity(employee.getIdCard()));
+        foundEmployee.setProjects(employee.getProjects().stream()
+                .map(EmployeeDTOMapper::ProjectToEntity)
+                .collect(Collectors.toSet()));
+
+        employeeRepository.save(foundEmployee);
+
+        return "Updated";
     }
 
     public void delete(int id) {

@@ -11,32 +11,38 @@ import java.util.stream.Collectors;
 @Service
 public class IDCardService {
 
-    private IDCardRepository IDCardRepository;
+    private final IDCardRepository idCardRepository;
 
-    public IDCardService(IDCardRepository IDCardRepository) {
-        this.IDCardRepository = IDCardRepository;
+    public IDCardService(IDCardRepository idCardRepository) {
+        this.idCardRepository = idCardRepository;
     }
 
     public List<IDCardDTO> getAll() {
-        return IDCardRepository.findAll().stream()
+        return idCardRepository.findAll().stream()
                 .map(IDCardDTOMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
     public IDCardDTO getById(int id) {
-        return IDCardRepository.findById(id).map(IDCardDTOMapper::toDTO).get();
+        return idCardRepository.findById(id).map(IDCardDTOMapper::toDTO).get();
     }
 
-    public IDCard save(IDCard IDCard) {
-        return IDCardRepository.save(IDCard);
+    public String save(IDCardDTO idCardDTO) {
+        idCardRepository.save(IDCardDTOMapper.toEntity(idCardDTO));
+        return "Saved";
     }
 
-    public IDCard update(IDCard IDCard) {
-        return IDCardRepository.save(IDCard);
+    public String update(IDCardDTO idCardDTO, int id) {
+        IDCard foundIdCard = idCardRepository.findById(id).get();
+        foundIdCard.setIssue_date(idCardDTO.getIssueDate());
+        foundIdCard.setExpiry_date(idCardDTO.getExpiryDate());
+        foundIdCard.setEmployee(IDCardDTOMapper.EmployeeToEntity(idCardDTO.getEmployee()));
+
+        return "Updated";
     }
 
     public void delete(int id) {
-        IDCardRepository.deleteById(id);
+        idCardRepository.deleteById(id);
     }
 
 }

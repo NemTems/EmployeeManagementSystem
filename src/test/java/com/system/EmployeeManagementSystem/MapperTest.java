@@ -9,13 +9,8 @@ import com.system.EmployeeManagementSystem.mapper.IDCardDTOMapper;
 import com.system.EmployeeManagementSystem.mapper.ProjectDTOMapper;
 import com.system.EmployeeManagementSystem.mapper.TaskDTOMapper;
 import com.system.EmployeeManagementSystem.models.*;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.test.context.event.annotation.BeforeTestClass;
-import org.springframework.test.context.event.annotation.BeforeTestExecution;
-
-import java.util.Collections;
 import java.util.Set;
 
 class MapperTest {
@@ -35,62 +30,72 @@ class MapperTest {
 
 	@BeforeEach
 	public void setUp() {
-		departmentDTO = new DepartmentDTO();
-		departmentDTO.setName("Human Resources");
-		departmentDTO.setLocation("California");
-		departmentDTO.setEmployees(Set.of());
+		departmentDTO = DepartmentDTO.builder()
+				.name("Human Resources")
+				.location("California")
+				.employees(Set.of())
+				.build();
 
-		idCardDTO = new IDCardDTO();
-		idCardDTO.setIssueDate("2024-01-01");
-		idCardDTO.setExpiryDate("2025-01-01");
+		idCardDTO = IDCardDTO.builder()
+				.issueDate("2024-01-01")
+				.expiryDate("2025-01-01")
+				.build();
 
-		projectDTO = new ProjectDTO();
-		projectDTO.setName("Project A");
-		projectDTO.setStartDate("2024-06-12");
-		projectDTO.setEndDate("2024-12-31");
-		projectDTO.setEmployees(Set.of());
-		projectDTO.setTasks(Set.of());
+		projectDTO = ProjectDTO.builder()
+				.name("Project A")
+				.startDate("2024-06-12")
+				.endDate("2024-12-31")
+				.employees(Set.of())
+				.tasks(Set.of())
+				.build();
 
-		taskDTO = new TaskDTO();
-		taskDTO.setDescription("Develop REST API");
-		taskDTO.setStatus(TaskStatus.InProgress);
+		taskDTO = TaskDTO.builder()
+				.description("Develop REST API")
+				.status(TaskStatus.InProgress)
+				.build();
 
-		employeeDTO = new EmployeeDTO();
-		employeeDTO.setName("Bobby");
-		employeeDTO.setEmail("bobby@gmail.com");
-		employeeDTO.setPhone("+371 20 321 425");
-		employeeDTO.setDepartment(departmentDTO);
-		employeeDTO.setIdCard(idCardDTO);
-		employeeDTO.setProjects(Set.of());
+		employeeDTO = EmployeeDTO.builder()
+				.name("Bobby")
+				.email("bobby@gmail.com")
+				.phone("+371 20 321 425")
+				.department(departmentDTO)
+				.idCard(idCardDTO)
+				.projects(Set.of())
+				.build();
 
-		departmentEntity = new Department();
-		departmentEntity.setName("Human Resources");
-		departmentEntity.setLocation("California");
-		departmentEntity.setEmployees(Set.of());
+		departmentEntity = Department.builder()
+				.name("Human Resources")
+				.location("California")
+				.employees(Set.of())
+				.build();
 
-		idCardEntity = new IDCard();
-		idCardEntity.setIssue_date("2024-01-01");
-		idCardEntity.setExpiry_date("2025-01-01");
+		idCardEntity = IDCard.builder()
+				.issue_date("2024-01-01")
+				.expiry_date("2025-01-01")
+				.build();
 
-		projectEntity = new Project();
-		projectEntity.setName("Project A");
-		projectEntity.setStart_date("2024-06-12");
-		projectEntity.setEnd_date("2024-12-31");
-		projectEntity.setEmployees(Set.of());
-		projectEntity.setTasks(Set.of());
+		projectEntity = Project.builder()
+				.name("Project A")
+				.start_date("2024-06-12")
+				.end_date("2024-12-31")
+				.employees(Set.of())
+				.tasks(Set.of())
+				.build();
 
-		taskEntity = new Task();
-		taskEntity.setDescription("Develop REST API");
-		taskEntity.setStatus(TaskStatus.InProgress);
-		taskEntity.setProject(projectEntity);
+		taskEntity = Task.builder()
+				.description("Develop REST API")
+				.status(TaskStatus.InProgress)
+				.project(projectEntity)
+				.build();
 
-		employeeEntity = new Employee();
-		employeeEntity.setName("Bobby");
-		employeeEntity.setEmail("bobby@gmail.com");
-		employeeEntity.setPhone("+371 20 321 425");
-		employeeEntity.setDepartment(departmentEntity);
-		employeeEntity.setIdcard(idCardEntity);
-		employeeEntity.setProjects(Set.of());
+		employeeEntity = Employee.builder()
+				.name("Bobby")
+				.email("bobby@gmail.com")
+				.phone("+371 20 321 425")
+				.department(departmentEntity)
+				.idcard(idCardEntity)
+				.projects(Set.of())
+				.build();
 
 		idCardEntity.setEmployee(employeeEntity); // IDCard
 	}

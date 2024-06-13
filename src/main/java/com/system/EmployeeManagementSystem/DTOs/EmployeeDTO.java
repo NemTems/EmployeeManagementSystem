@@ -1,14 +1,16 @@
 package com.system.EmployeeManagementSystem.DTOs;
 
-import com.system.EmployeeManagementSystem.models.Department;
-import com.system.EmployeeManagementSystem.models.IDCard;
-import com.system.EmployeeManagementSystem.models.Project;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class EmployeeDTO {
     private String name;
     private String email;

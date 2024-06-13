@@ -2,7 +2,6 @@ package com.system.EmployeeManagementSystem.controllers;
 
 
 import com.system.EmployeeManagementSystem.DTOs.ProjectDTO;
-import com.system.EmployeeManagementSystem.models.Project;
 import com.system.EmployeeManagementSystem.services.ProjectService;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,13 +27,13 @@ public class ProjectController {
     }
 
     @PostMapping("/add")
-    public void addProject(@RequestBody Project department) {
-        projectService.save(department);
+    public String addProject(@RequestBody ProjectDTO projectDTO) {
+        return projectService.save(projectDTO);
     }
 
-    @PutMapping("/update")
-    public void updateProject(@RequestBody Project department) {
-        projectService.update(department);
+    @PutMapping("/{id}/update")
+    public String updateProject(@PathVariable int id, @RequestBody ProjectDTO projectDTO) {
+        return projectService.update(projectDTO, id);
     }
 
     @DeleteMapping("/{id}/delete")

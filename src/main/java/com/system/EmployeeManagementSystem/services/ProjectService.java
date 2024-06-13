@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 @Service
 public class ProjectService {
 
-    private ProjectRepository projectRepository;
+    private final ProjectRepository projectRepository;
 
     public ProjectService(ProjectRepository projectRepository) {
         this.projectRepository = projectRepository;
@@ -28,12 +28,25 @@ public class ProjectService {
         return projectRepository.findById(id).map(ProjectDTOMapper::toDTO).get();
     }
 
-    public Project save(Project Project) {
-        return projectRepository.save(Project);
+    public String save(ProjectDTO projectDTO) {
+        projectRepository.save(ProjectDTOMapper.toEntity(projectDTO));
+        return "Saved";
     }
 
-    public Project update(Project Project) {
-        return projectRepository.save(Project);
+    public String update(ProjectDTO projectDTO, int id) {
+        Project foundProject = projectRepository.findById(id).get();
+        foundProject.setName(projectDTO.getName());
+        foundProject.setStart_date(projectDTO.getStartDate());
+        foundProject.setEnd_date(projectDTO.getEndDate());
+        foundProject.setEmployees(projectDTO.getEmployees().stream()
+                .map(ProjectDTOMapper::EmployeeToEntity)
+                .collect(Collectors.toSet()));
+        foundProject.setTasks(projectDTO.getTasks().stream()
+                .map(ProjectDTOMapper::TasksToEntity)
+                .collect(Collectors.toSet()));
+
+        projectRepository.save(foundProject);
+        return "Updated";
     }
 
     public void delete(int id) {

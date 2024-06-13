@@ -12,50 +12,50 @@ public class TaskDTOMapper {
     public static TaskDTO toDTO(Task task) {
         if (task == null) return null;
 
-        TaskDTO dto = new TaskDTO();
-        dto.setDescription(task.getDescription());
-        dto.setStatus(task.getStatus());
-        dto.setProject(ProjectToDTO(task.getProject()));
-        return dto;
+        return TaskDTO.builder()
+                .description(task.getDescription())
+                .status(task.getStatus())
+                .project(ProjectToDTO(task.getProject()))
+                .build();
     }
 
     public static Task toEntity(TaskDTO dto) {
         if (dto == null) return null;
 
-        Task task = new Task();
-        task.setDescription(dto.getDescription());
-        task.setStatus(dto.getStatus());
-        task.setProject(ProjectToEntity(dto.getProject()));
-        return task;
+        return Task.builder()
+                .description(dto.getDescription())
+                .status(dto.getStatus())
+                .project(ProjectToEntity(dto.getProject()))
+                .build();
     }
 
     public static ProjectDTO ProjectToDTO(Project project) {
         if (project == null) return null;
 
-        ProjectDTO dto = new ProjectDTO();
-        dto.setName(project.getName());
-        dto.setStartDate(project.getStart_date());
-        dto.setEndDate(project.getEnd_date());
-        if (project.getEmployees() != null) {
-            dto.setEmployees(project.getEmployees().stream()
-                    .map(ProjectDTOMapper::EmployeeToDTO)
-                    .collect(Collectors.toSet()));
-        }
-        return dto;
+        return ProjectDTO.builder()
+                .name(project.getName())
+                .startDate(project.getStart_date())
+                .endDate(project.getEnd_date())
+                .employees(project.getEmployees() != null
+                        ? project.getEmployees().stream()
+                        .map(ProjectDTOMapper::EmployeeToDTO)
+                        .collect(Collectors.toSet())
+                        : null)
+                .build();
     }
 
     public static Project ProjectToEntity(ProjectDTO dto) {
         if (dto == null) return null;
 
-        Project project = new Project();
-        project.setName(dto.getName());
-        project.setStart_date(dto.getStartDate());
-        project.setEnd_date(dto.getEndDate());
-        if (dto.getEmployees() != null) {
-            project.setEmployees(dto.getEmployees().stream()
-                    .map(EmployeeDTOMapper::toEntity)
-                    .collect(Collectors.toSet()));
-        }
-        return project;
+        return Project.builder()
+                .name(dto.getName())
+                .start_date(dto.getStartDate())
+                .end_date(dto.getEndDate())
+                .employees(dto.getEmployees() != null
+                        ? dto.getEmployees().stream()
+                        .map(ProjectDTOMapper::EmployeeToEntity)
+                        .collect(Collectors.toSet())
+                        : null)
+                .build();
     }
 }

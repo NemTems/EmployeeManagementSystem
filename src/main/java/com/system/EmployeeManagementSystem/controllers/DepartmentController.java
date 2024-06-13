@@ -1,7 +1,6 @@
 package com.system.EmployeeManagementSystem.controllers;
 
 import com.system.EmployeeManagementSystem.DTOs.DepartmentDTO;
-import com.system.EmployeeManagementSystem.models.Department;
 import com.system.EmployeeManagementSystem.services.DepartmentService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -28,13 +27,13 @@ public class DepartmentController {
     }
 
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public DepartmentDTO addDepartment(@RequestBody DepartmentDTO department) {
-        return departmentService.save(department);
+    public String addDepartment(@RequestBody DepartmentDTO departmentDTO) {
+        return departmentService.save(departmentDTO);
     }
 
-    @PutMapping("/update")
-    public DepartmentDTO updateDepartment(@RequestBody DepartmentDTO department) {
-        return departmentService.update(department);
+    @PutMapping("/{id}/update")
+    public String updateDepartment(@PathVariable int id ,@RequestBody DepartmentDTO departmentDTO) {
+        return departmentService.update(departmentDTO, id);
     }
 
     @DeleteMapping("/{id}/delete")
