@@ -1,6 +1,5 @@
 package com.system.EmployeeManagementSystem.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.system.EmployeeManagementSystem.DTOs.DepartmentDTO;
 import com.system.EmployeeManagementSystem.controllers.DepartmentController;
