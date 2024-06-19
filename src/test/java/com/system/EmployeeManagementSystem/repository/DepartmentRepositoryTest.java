@@ -1,4 +1,4 @@
-package com.system.EmployeeManagementSystem;
+package com.system.EmployeeManagementSystem.repository;
 
 import com.system.EmployeeManagementSystem.models.Department;
 import com.system.EmployeeManagementSystem.repositories.DepartmentRepository;
@@ -72,10 +72,10 @@ class DepartmentRepositoryTest {
 
     @Test
     public void DepartmentRepositoryDeleteTest(){
-        Department savedDepartment = departmentRepository.save(departmentOne);
+        departmentRepository.save(departmentOne);
 
         departmentRepository.deleteById(departmentOne.getId());
 
-        Assertions.assertFalse(departmentRepository.findById(savedDepartment.getId()).isPresent());
+        Assertions.assertFalse(departmentRepository.findById(departmentOne.getId()).isPresent());
     }
 }

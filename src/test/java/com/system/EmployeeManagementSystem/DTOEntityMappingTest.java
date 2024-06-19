@@ -13,9 +13,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.Set;
 
-class MapperTest {
+class DTOEntityMappingTest {
 
-	// CONSTANT INSTANCES FOR TESTING
 	private DepartmentDTO departmentDTO;
 	private EmployeeDTO employeeDTO;
 	private IDCardDTO idCardDTO;
